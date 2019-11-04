@@ -52,7 +52,7 @@ obj = Plopper(dir_path+'/heat-3d_pragma.c',dir_path)
 
 def plopper_func(x):
     value = [p0_dict[x[0]],p1_dict[x[1]],p2_dict[x[2]]]
-    #print('VALUES:',p0_dict[x[0]])
+    print('VALUES:',p0_dict[x[0]])
     params = ["P1","P2","P3"]
 
     result = obj.findRuntime(value, params)

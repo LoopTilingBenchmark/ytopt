@@ -30,6 +30,8 @@ class Plopper:
             for line in buf:
                 modify_line = line
                 for key, value in dictVal.items():
+                    #print(key)
+                    #print(value)
                     if key in modify_line:
                         if value != 'None': #For empty string options
                             modify_line = modify_line.replace('#'+key, str(value))
@@ -62,12 +64,17 @@ class Plopper:
         kernel_dir = self.sourcefile[:kernel_idx]
 
 
-        cmd1 = "clang "  +interimfile +" " + kernel_dir + "/polybench.c" \
+        #cmd1 = "clang "  +interimfile +" " + kernel_dir + "/polybench.c" \
+        #        + " -I" + kernel_dir + \
+        #        " -DPOLYBENCH_TIME -DLARGE_DATASET -O3 -mllvm -polly -mllvm -polly-process-unprofitable -o "+tmpbinary
+
+        cmd1 = "gcc "  +interimfile +" " + kernel_dir + "/polybench.c" \
                 + " -I" + kernel_dir + \
-                " -DPOLYBENCH_TIME -DLARGE_DATASET -O3 -mllvm -polly -mllvm -polly-process-unprofitable -o "+tmpbinary
+                " -fopenmp -DPOLYBENCH_TIME -O3 -lm -o "+tmpbinary
 
-        cmd2 = kernel_dir + "/time_benchmark.sh " +  tmpbinary
+        #cmd2 = kernel_dir + "/time_benchmark.sh " +  tmpbinary
 
+        cmd2 =  tmpbinary
 
         #Find the compilation status using subprocess
         compilation_status = subprocess.run(cmd1, shell=True, stderr=subprocess.PIPE)
